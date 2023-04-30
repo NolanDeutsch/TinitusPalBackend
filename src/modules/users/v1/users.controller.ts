@@ -1,7 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from 'common/decorators/user.decorator';
-import { AuthUser } from '@supabase/supabase-js';
+import { AuthUser } from 'common/types/superbase.types';
 
 @Controller({
   path: 'users',
@@ -12,6 +12,6 @@ export class UsersController {
 
   @Get('summery')
   async getUserSummery(@User() user: AuthUser) {
-    return this.usersService.getUserSummery(user.id);
+    return this.usersService.getUserSummery(user.sub);
   }
 }
