@@ -1,7 +1,5 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { User } from 'common/decorators/user.decorator';
-import { AuthUser } from 'common/types/superbase.types';
 
 @Controller({
   path: 'users',
@@ -10,8 +8,8 @@ import { AuthUser } from 'common/types/superbase.types';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Get('summery')
-  async getUserSummery(@User() user: AuthUser) {
-    return this.usersService.getUserSummery(user.sub);
+  @Get(':id/summery')
+  async getSummery(@Param('id') id: string) {
+    return this.usersService.getSummery(id);
   }
 }
