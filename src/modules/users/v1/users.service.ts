@@ -13,10 +13,12 @@ export class UsersService {
       throw new InternalServerErrorException(error.message);
     }
 
+    const user = head(data);
     const symptoms = await this.symptomsService.getByUserId(userId);
     // TODO add types
     const formattedSymptoms = symptoms.map((symptom: any) => ({ ...symptom, name: symptom.symptom.name }));
+    const formattedUser = { ...user, name: `${user.firstName} ${user.lastName}` };
 
-    return { user: head(data), symptoms: formattedSymptoms };
+    return { user: formattedUser, symptoms: formattedSymptoms };
   }
 }
