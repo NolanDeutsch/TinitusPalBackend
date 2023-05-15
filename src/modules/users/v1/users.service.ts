@@ -26,8 +26,15 @@ export class UsersService {
     }
 
     delete user.email;
-
-    user.name = `${user.firstName} ${user.lastName}`;
+    Object.assign(user, { name: `${user.firstName} ${user.lastName}` });
     return { user, symptoms: formattedSymptoms };
+  }
+
+  async getAll() {
+    const { data, error } = await this.superbaseService.getClient().from('users').select('*');
+    if (error) {
+      throw new InternalServerErrorException(error.message);
+    }
+    return data;
   }
 }
